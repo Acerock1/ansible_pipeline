@@ -1,0 +1,32 @@
+---
+ - hosts: web
+   remote_user: ubuntu 
+   become: yes
+   ignore_errors: yes
+   tasks:
+           - name: create a user
+             user:
+                     name: Afo_ansible
+                     comment: this user was created by ansible
+           - name: create a directory
+             file:
+                     path: /home/ubuntu/ansible_was_here
+                     state: directory
+                     mode: 0777
+           - name: create a folder
+             file:
+                     path: /home/ubuntu/ansible_was_here/readme.md
+                     state: touch 
+           - name: install apache
+             apt:
+                     name: apache2
+                     state: present
+           - name: start apache
+             service:
+                    name: apache2
+                    state: started
+           - name: append into folder
+             shell: echo " Hello world" > /var/www/html/index.html
+
+
+
